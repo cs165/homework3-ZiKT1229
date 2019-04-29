@@ -9,6 +9,8 @@
 class MenuScreen {
   constructor(containerElement) {
     this.containerElement = containerElement;
+    this.choices = document.getElementById('choices');
+    this.menuItems();
   }
 
   show() {
@@ -17,5 +19,13 @@ class MenuScreen {
 
   hide() {
     this.containerElement.classList.add('inactive');
+  }
+
+  menuItems() {
+    FLASHCARD_DECKS.forEach((deck) => {
+      const title = document.createElement('div');
+      title.textContent = deck.title;
+      this.choices.appendChild(title);
+    });
   }
 }
