@@ -25,5 +25,16 @@ class App {
     // Uncomment this pair of lines to see the "results" screen:
     // this.menu.hide();
     // this.results.show();
+    this.flashcards.show = this.flashcards.show.bind(this.flashcards);
+    this.startGame();
+  }
+
+  startGame() {
+    this.menu.createMenuItems(this.flashcards.show);
+  }
+
+  showResults() {
+    this.menu.hide();
+    this.results.show();
   }
 }

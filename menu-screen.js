@@ -10,7 +10,7 @@ class MenuScreen {
   constructor(containerElement) {
     this.containerElement = containerElement;
     this.choices = document.getElementById('choices');
-    this.menuItems();
+    this._item = '';
   }
 
   show() {
@@ -21,11 +21,24 @@ class MenuScreen {
     this.containerElement.classList.add('inactive');
   }
 
-  menuItems() {
+  createMenuItems(flashcardsShow) {
     FLASHCARD_DECKS.forEach((deck) => {
       const title = document.createElement('div');
       title.textContent = deck.title;
+      title.addEventListener('click', (event) => {
+        this.item = event.target.textContent;
+        this.hide();
+        flashcardsShow(deck.words);
+      });
       this.choices.appendChild(title);
     });
+  }
+
+  get item() {
+    return this._item;
+  }
+
+  set item(item) {
+    this._item =item;
   }
 }
