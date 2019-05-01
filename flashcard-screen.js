@@ -16,9 +16,8 @@ class FlashcardScreen {
     this.containerElement.classList.remove('inactive');
     const flashcardContainer = document.querySelector('#flashcard-container');
     Object.keys(words).forEach((key) => {
-      //const newCard = new Flashcard(flashcardContainer, key, words[key]);
+      const newCard = new Flashcard(flashcardContainer, key, words[key]);
     });
-    const newCard = new Flashcard(flashcardContainer, 'word', 'test');
   }
 
   hide() {

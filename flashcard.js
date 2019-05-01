@@ -16,6 +16,20 @@ class Flashcard {
     this.containerElement.append(this.flashcardElement);
 
     this.flashcardElement.addEventListener('pointerup', this._flipCard);
+
+    this.orignX = 0;
+    this.orignY = 0;
+    this.deltaX = 0;
+    this.deltaY = 0;
+    this.deg = 0;
+    this.draged = false;
+    this.moved = false;
+    this._dragCard = this._dragCard.bind(this);
+    this._moveCard = this._moveCard.bind(this);
+    this._drogCard = this._drogCard.bind(this);
+    this.flashcardElement.addEventListener('mousedown', this._dragCard);
+    this.flashcardElement.addEventListener('mousemove', this._moveCard);
+    this.flashcardElement.addEventListener('mouseup', this._drogCard);
   }
 
   // Creates the DOM object representing a flashcard with the given
@@ -52,6 +66,49 @@ class Flashcard {
   }
 
   _flipCard(event) {
+    if (this.moved) return;
     this.flashcardElement.classList.toggle('show-word');
+  }
+
+  _dragCard(event) {
+    this.draged = true;
+    this.orignX = event.clientX;
+    this.orignY = event.clientY;
+    event.target.parentNode.style.transitionDuration = '';
+  }
+
+  _moveCard(event) {
+    if (!this.draged) return;
+    this.moved = true;
+    this.deltaX = event.clientX - this.orignX;
+    this.deltaY = event.clientY - this.orignY;
+    this.deg = 0.2 * this.deltaX;
+    event.target.parentNode.style.transformOrigin = `${this.deg > 0 ? '100%' : '0%'} 100%`;
+    event.target.parentNode.style.transform = `rotate(${this.deg}deg) translate(${this.deltaX}px, ${this.deltaY}px)`;
+    if (this.deltaX > 150) {
+      document.body.style.backgroundColor = '#97b7b7';
+    } else if (this.deltaX < -150) {
+      document.body.style.backgroundColor = '#97b7b7';
+    } else {
+      document.body.style.backgroundColor = '';
+    }
+  }
+
+  _drogCard(event) {
+    if (this.draged) {
+      this.draged = false;
+      this.moved = false;
+      if (this.deltaX > 150) {
+        this.containerElement.removeChild(this.flashcardElement);
+        console.log('right');
+      } else if (this.deltaX < -150) {
+        this.containerElement.removeChild(this.flashcardElement);
+        console.log('wrong');
+      }
+      document.body.style.backgroundColor = '';
+      event.target.parentNode.style.transform = '';
+      event.target.parentNode.style.transformOrigin = '';
+      event.target.parentNode.style.transitionDuration = '.6s';
+    }
   }
 }

@@ -15,3 +15,11 @@ TODO(you): Write any additional styles you need here.
     transform: scaleY(1);
   }
 }
+
+.flashcard-box {
+  display: none;
+}
+
+.flashcard-box:first-child {
+  display: block;
+}
