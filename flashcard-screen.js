@@ -10,13 +10,14 @@
 class FlashcardScreen {
   constructor(containerElement) {
     this.containerElement = containerElement;
+    this.hide = this.hide.bind(this);
   }
 
-  show(words) {
+  show(words, resultMethod) {
     this.containerElement.classList.remove('inactive');
     const flashcardContainer = document.querySelector('#flashcard-container');
     Object.keys(words).forEach((key) => {
-      const newCard = new Flashcard(flashcardContainer, key, words[key]);
+      const newCard = new Flashcard(flashcardContainer, key, words[key], resultMethod, this.hide);
     });
   }
 

@@ -7,7 +7,7 @@
 // - Adding additional fields
 
 class Flashcard {
-  constructor(containerElement, frontText, backText) {
+  constructor(containerElement, frontText, backText, resultMethod, hide) {
     this.containerElement = containerElement;
 
     this._flipCard = this._flipCard.bind(this);
@@ -16,6 +16,9 @@ class Flashcard {
     this.containerElement.append(this.flashcardElement);
 
     this.flashcardElement.addEventListener('pointerup', this._flipCard);
+
+    this.resultMethod = resultMethod;
+    this.hide = hide;
 
     this.orignX = 0;
     this.orignY = 0;
@@ -109,6 +112,10 @@ class Flashcard {
       event.target.parentNode.style.transform = '';
       event.target.parentNode.style.transformOrigin = '';
       event.target.parentNode.style.transitionDuration = '.6s';
+      if (this.containerElement.childNodes.length === 0) {
+        this.hide();
+        this.resultMethod();
+      }
     }
   }
 }

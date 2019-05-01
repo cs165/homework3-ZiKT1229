@@ -21,14 +21,14 @@ class MenuScreen {
     this.containerElement.classList.add('inactive');
   }
 
-  createMenuItems(flashcardsShow) {
+  createMenuItems(flashcardsShow, resultMethod) {
     FLASHCARD_DECKS.forEach((deck) => {
       const title = document.createElement('div');
       title.textContent = deck.title;
       title.addEventListener('click', (event) => {
         this.item = event.target.textContent;
         this.hide();
-        flashcardsShow(deck.words);
+        flashcardsShow(deck.words, resultMethod);
       });
       this.choices.appendChild(title);
     });

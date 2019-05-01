@@ -26,15 +26,11 @@ class App {
     // this.menu.hide();
     // this.results.show();
     this.flashcards.show = this.flashcards.show.bind(this.flashcards);
+    this.results.show = this.results.show.bind(this.results);
     this.startGame();
   }
 
   startGame() {
-    this.menu.createMenuItems(this.flashcards.show);
-  }
-
-  showResults() {
-    this.menu.hide();
-    this.results.show();
+    this.menu.createMenuItems(this.flashcards.show, this.results.show);
   }
 }
