@@ -30,9 +30,9 @@ class Flashcard {
     this._dragCard = this._dragCard.bind(this);
     this._moveCard = this._moveCard.bind(this);
     this._drogCard = this._drogCard.bind(this);
-    this.flashcardElement.addEventListener('mousedown', this._dragCard);
-    this.flashcardElement.addEventListener('mousemove', this._moveCard);
-    this.flashcardElement.addEventListener('mouseup', this._drogCard);
+    this.flashcardElement.addEventListener('pointerdown', this._dragCard);
+    this.flashcardElement.addEventListener('pointermove', this._moveCard);
+    this.flashcardElement.addEventListener('pointerup', this._drogCard);
   }
 
   // Creates the DOM object representing a flashcard with the given
