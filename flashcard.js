@@ -7,7 +7,7 @@
 // - Adding additional fields
 
 class Flashcard {
-  constructor(containerElement, frontText, backText, resultMethod, hide) {
+  constructor(containerElement, frontText, backText, resultMethod, hide, score) {
     this.containerElement = containerElement;
 
     this._flipCard = this._flipCard.bind(this);
@@ -19,6 +19,7 @@ class Flashcard {
 
     this.resultMethod = resultMethod;
     this.hide = hide;
+    this.score = score;
 
     this.orignX = 0;
     this.orignY = 0;
@@ -103,9 +104,11 @@ class Flashcard {
       this.moved = false;
       if (this.deltaX > 150) {
         this.containerElement.removeChild(this.flashcardElement);
+        this.score(true);
         console.log('right');
       } else if (this.deltaX < -150) {
         this.containerElement.removeChild(this.flashcardElement);
+        this.score(false);
         console.log('wrong');
       }
       document.body.style.backgroundColor = '';
