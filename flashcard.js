@@ -87,8 +87,8 @@ class Flashcard {
     this.deltaX = event.clientX - this.orignX;
     this.deltaY = event.clientY - this.orignY;
     this.deg = 0.2 * this.deltaX;
-    event.target.parentNode.style.transformOrigin = `${this.deg > 0 ? '100%' : '0%'} 100%`;
-    event.target.parentNode.style.transform = `rotate(${this.deg}deg) translate(${this.deltaX}px, ${this.deltaY}px)`;
+    event.target.parentNode.style.transformOrigin = `${event.offsetX}px ${event.offsetY}px`;
+    event.target.parentNode.style.transform = `translate(${this.deltaX}px, ${this.deltaY}px) rotate(${this.deg}deg) `;
     if (this.deltaX > 150) {
       document.body.style.backgroundColor = '#97b7b7';
     } else if (this.deltaX < -150) {
@@ -105,11 +105,9 @@ class Flashcard {
       if (this.deltaX > 150) {
         this.containerElement.removeChild(this.flashcardElement);
         this.score(true);
-        console.log('right');
       } else if (this.deltaX < -150) {
         this.containerElement.removeChild(this.flashcardElement);
         this.score(false);
-        console.log('wrong');
       }
       document.body.style.backgroundColor = '';
       event.target.parentNode.style.transform = '';

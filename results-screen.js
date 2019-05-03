@@ -20,7 +20,6 @@ class ResultsScreen {
     this.rightScore = numberCorrect;
     this.leftScore = numberWrong;
     this.resultScore = Math.floor(100 * this.rightScore / (this.rightScore + this.leftScore));
-    console.log(`${this.resultScore} = ${this.rightScore} ~ ${this.leftScore}`);
     document.getElementsByClassName('percent')[0].textContent = `${this.resultScore}`;
     document.getElementsByClassName('correct')[1].textContent = `${this.rightScore}`;
     document.getElementsByClassName('incorrect')[1].textContent = `${this.leftScore}`;
