@@ -18,17 +18,16 @@ class FlashcardScreen {
     this.left = document.getElementsByClassName('incorrect')[0];
     this.rightScore = 0;
     this.leftScore = 0;
-    this.resultScore = 0;
     this.score = this.score.bind(this);
   }
 
-  show(words, resultMethod) {
+  show(words, menuMethod, resultMethod) {
     this.containerElement.classList.remove('inactive');
     const flashcardContainer = document.querySelector('#flashcard-container');
     this.resultMethod = resultMethod;
     Object.keys(words).forEach((key) => {
       // 新增卡片
-      const newCard = new Flashcard(flashcardContainer, key, words[key], this.callResult, this.hide, this.score);
+      const newCard = new Flashcard(flashcardContainer, key, words[key], menuMethod, this.callResult, this.hide, this.score);
     });
   }
 
@@ -45,11 +44,14 @@ class FlashcardScreen {
       this.leftScore += 1;
       this.left.textContent = `${this.leftScore}`;
     }
-    this.resultScore = Math.floor(this.rightScore / (this.rightScore + this.leftScore));
   }
 
   // 渲染 result 畫面
-  callResult() {
-    this.resultMethod(this.rightScore, this.leftScore);
+  callResult(menuMethod) {
+    this.resultMethod(this.rightScore, this.leftScore, menuMethod);
+    this.rightScore = 0;
+    this.leftScore = 0;
+    this.right.textContent = ``;
+    this.left.textContent = ``;
   }
 }

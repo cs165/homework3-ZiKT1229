@@ -11,6 +11,7 @@ class MenuScreen {
     this.containerElement = containerElement;
     this.choices = document.getElementById('choices');
     this.item = '';
+    this.show = this.show.bind(this);
   }
 
   show() {
@@ -31,7 +32,7 @@ class MenuScreen {
         this.hide();
 
         // 渲染卡片內容
-        flashcardsShow(deck.words, resultMethod);
+        flashcardsShow(deck.words, this.show, resultMethod);
       });
       this.choices.appendChild(title);
     });

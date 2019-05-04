@@ -7,7 +7,7 @@
 // - Adding additional fields
 
 class Flashcard {
-  constructor(containerElement, frontText, backText, resultMethod, hide, score) {
+  constructor(containerElement, frontText, backText, menuMethod, resultMethod, hide, score) {
     this.containerElement = containerElement;
 
     this._flipCard = this._flipCard.bind(this);
@@ -17,6 +17,7 @@ class Flashcard {
 
     this.flashcardElement.addEventListener('pointerup', this._flipCard);
 
+    this.menuMethod = menuMethod;
     this.resultMethod = resultMethod;
     this.hide = hide;
     this.score = score;
@@ -117,7 +118,7 @@ class Flashcard {
       event.target.parentNode.style.transitionDuration = '.6s';
       if (this.containerElement.childNodes.length === 0) {
         this.hide();
-        this.resultMethod();
+        this.resultMethod(this.menuMethod);
       }
     }
   }
