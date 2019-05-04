@@ -29,4 +29,13 @@ const FLASHCARD_DECKS = [{
     '바나나': 'banana',
     '복숭아': 'peach'
   }
+}, {
+  title: 'Basic Taiwanese Words',
+  words: {
+    '早安': 'Good morning',
+    '晚安': 'Good night',
+    '早餐': 'breakfast',
+    '午餐': 'lunch',
+    '晚餐': 'dinner',
+  }
 }];
