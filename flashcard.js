@@ -31,6 +31,8 @@ class Flashcard {
     this._dragCard = this._dragCard.bind(this);
     this._moveCard = this._moveCard.bind(this);
     this._drogCard = this._drogCard.bind(this);
+
+    // 移動 card 的 events
     this.flashcardElement.addEventListener('pointerdown', this._dragCard);
     this.flashcardElement.addEventListener('pointermove', this._moveCard);
     this.flashcardElement.addEventListener('pointerup', this._drogCard);

@@ -27,6 +27,7 @@ class FlashcardScreen {
     const flashcardContainer = document.querySelector('#flashcard-container');
     this.resultMethod = resultMethod;
     Object.keys(words).forEach((key) => {
+      // 新增卡片
       const newCard = new Flashcard(flashcardContainer, key, words[key], this.callResult, this.hide, this.score);
     });
   }
@@ -35,6 +36,7 @@ class FlashcardScreen {
     this.containerElement.classList.add('inactive');
   }
 
+  // 計算分數
   score(answer) {
     if (answer) {
       this.rightScore += 1;
@@ -46,6 +48,7 @@ class FlashcardScreen {
     this.resultScore = Math.floor(this.rightScore / (this.rightScore + this.leftScore));
   }
 
+  // 渲染 result 畫面
   callResult() {
     this.resultMethod(this.rightScore, this.leftScore);
   }

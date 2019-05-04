@@ -10,7 +10,7 @@ class MenuScreen {
   constructor(containerElement) {
     this.containerElement = containerElement;
     this.choices = document.getElementById('choices');
-    this._item = '';
+    this.item = '';
   }
 
   show() {
@@ -21,6 +21,7 @@ class MenuScreen {
     this.containerElement.classList.add('inactive');
   }
 
+  // 渲染 menu 為 constants.js 的內容，並賦予 click event，到下一步
   createMenuItems(flashcardsShow, resultMethod) {
     FLASHCARD_DECKS.forEach((deck) => {
       const title = document.createElement('div');
@@ -28,17 +29,11 @@ class MenuScreen {
       title.addEventListener('click', (event) => {
         this.item = event.target.textContent;
         this.hide();
+
+        // 渲染卡片內容
         flashcardsShow(deck.words, resultMethod);
       });
       this.choices.appendChild(title);
     });
-  }
-
-  get item() {
-    return this._item;
-  }
-
-  set item(item) {
-    this._item =item;
   }
 }

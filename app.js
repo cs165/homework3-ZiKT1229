@@ -25,12 +25,16 @@ class App {
     // Uncomment this pair of lines to see the "results" screen:
     // this.menu.hide();
     // this.results.show();
+
     this.flashcards.show = this.flashcards.show.bind(this.flashcards);
     this.results.show = this.results.show.bind(this.results);
+
+    // 開始執行這個 app
     this.startGame();
   }
 
   startGame() {
+    // 渲染 menu 開始選擇
     this.menu.createMenuItems(this.flashcards.show, this.results.show);
   }
 }
