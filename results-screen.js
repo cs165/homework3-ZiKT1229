@@ -16,6 +16,7 @@ class ResultsScreen {
     this.continue = this.containerElement.getElementsByClassName('continue')[0];
     this.toMenu = this.containerElement.getElementsByClassName('to-menu')[0];
 
+    this.cardScreenShow = null;
     this.menuMethod = null;
     this.rightScore = 0;
     this.leftScore = 0;
@@ -25,10 +26,16 @@ class ResultsScreen {
     this.toMenuEvent = this.toMenuEvent.bind(this);
     this.continue.addEventListener('click', this.continueEvent);
     this.toMenu.addEventListener('click', this.toMenuEvent);
+
+    this.getCardDeck = null;
+    this.setCardDeck = null;
   }
 
-  show(numberCorrect, numberWrong, menuMethod) {
+  show(numberCorrect, numberWrong, menuMethod, cardScreenShow, setCardDeck, getCardDeck) {
+    this.getCardDeck = getCardDeck;
+    this.setCardDeck = setCardDeck;
     this.containerElement.classList.remove('inactive');
+    this.cardScreenShow = cardScreenShow;
     this.menuMethod = menuMethod;
     this.rightScore = numberCorrect;
     this.leftScore = numberWrong;
@@ -48,14 +55,23 @@ class ResultsScreen {
   }
 
   continueEvent() {
+    this.hide();
     if (this.leftScore) {
-
+      const newCD = this.getCardDeck(false);
+      this.cardScreenShow(newCD, this.menuMethod, this.show);
     } else {
-      
+      const newCD = this.getCardDeck(true);
+      this.cardScreenShow(newCD, this.menuMethod, this.show);
+      this.rightScore = 0;
     }
+    this.leftScore = 0;
+    this.resultScore = 0;
   }
 
   toMenuEvent() {
+    this.rightScore = 0;
+    this.leftScore = 0;
+    this.resultScore = 0;
     this.hide();
     this.menuMethod();
   }
