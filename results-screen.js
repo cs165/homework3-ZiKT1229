@@ -16,34 +16,27 @@ class ResultsScreen {
     this.continue = this.containerElement.getElementsByClassName('continue')[0];
     this.toMenu = this.containerElement.getElementsByClassName('to-menu')[0];
 
-    this.cardScreenShow = null;
-    this.menuMethod = null;
-    this.rightScore = 0;
-    this.leftScore = 0;
-    this.resultScore = 0;
-
+    this.menuShow = null;
+    this.cardShow = null;
+    this.getScore = null;
+    this.setScore = null;
+    this.getDeck = null;
+    this.setDeck = null;
     this.continueEvent = this.continueEvent.bind(this);
     this.toMenuEvent = this.toMenuEvent.bind(this);
     this.continue.addEventListener('click', this.continueEvent);
     this.toMenu.addEventListener('click', this.toMenuEvent);
-
-    this.getCardDeck = null;
-    this.setCardDeck = null;
   }
 
-  show(numberCorrect, numberWrong, menuMethod, cardScreenShow, setCardDeck, getCardDeck) {
-    this.getCardDeck = getCardDeck;
-    this.setCardDeck = setCardDeck;
+  show() {
     this.containerElement.classList.remove('inactive');
-    this.cardScreenShow = cardScreenShow;
-    this.menuMethod = menuMethod;
-    this.rightScore = numberCorrect;
-    this.leftScore = numberWrong;
-    this.resultScore = Math.floor(100 * this.rightScore / (this.rightScore + this.leftScore));
-    this.percent.textContent = `${this.resultScore}`;
-    this.correct.textContent = `${this.rightScore}`;
-    this.incorrect.textContent = `${this.leftScore}`;
-    if (this.leftScore) {
+    const rightScore = this.getScore(true);
+    const wrongScore = this.getScore(false);
+    const percentScore = Math.floor(100 * rightScore / (rightScore + wrongScore));
+    this.percent.textContent = `${percentScore}`;
+    this.correct.textContent = `${rightScore}`;
+    this.incorrect.textContent = `${wrongScore}`;
+    if (wrongScore) {
       this.continue.textContent = 'Continue';
     } else {
       this.continue.textContent = 'Start over?';
@@ -54,25 +47,25 @@ class ResultsScreen {
     this.containerElement.classList.add('inactive');
   }
 
+  // todo
   continueEvent() {
     this.hide();
-    if (this.leftScore) {
-      const newCD = this.getCardDeck(false);
-      this.cardScreenShow(newCD, this.menuMethod, this.show);
+    if (this.getScore(false)) {
+      const deck = this.getDeck(true);
+      this.cardShow(deck, false);
+      this.setScore(0, false);
     } else {
-      const newCD = this.getCardDeck(true);
-      this.cardScreenShow(newCD, this.menuMethod, this.show);
-      this.rightScore = 0;
+      const deck = this.getDeck(true);
+      this.cardShow(deck, false);
+      this.setScore(0, true);
+      this.setScore(0, false);
     }
-    this.leftScore = 0;
-    this.resultScore = 0;
   }
 
   toMenuEvent() {
-    this.rightScore = 0;
-    this.leftScore = 0;
-    this.resultScore = 0;
+    this.setScore(0, true);
+    this.setScore(0, false);
     this.hide();
-    this.menuMethod();
+    this.menuShow();
   }
 }

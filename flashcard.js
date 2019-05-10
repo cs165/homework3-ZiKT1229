@@ -7,7 +7,7 @@
 // - Adding additional fields
 
 class Flashcard {
-  constructor(containerElement, frontText, backText, menuMethod, resultMethod, hide, score, getCardDeck, setCardDeck) {
+  constructor(containerElement, frontText, backText, hide, resultShow, score) {
     this.containerElement = containerElement;
 
     this._flipCard = this._flipCard.bind(this);
@@ -17,13 +17,10 @@ class Flashcard {
 
     this.flashcardElement.addEventListener('pointerup', this._flipCard);
 
-    this.menuMethod = menuMethod;
-    this.resultMethod = resultMethod;
+    this.setDeck = null;
     this.hide = hide;
+    this.resultShow = resultShow;
     this.score = score;
-    this.getCardDeck = getCardDeck;
-    this.setCardDeck = setCardDeck;
-
     this.orignX = 0;
     this.orignY = 0;
     this.deltaX = 0;
@@ -112,9 +109,9 @@ class Flashcard {
         this.score(true);
       } else if (this.deltaX < -150) {
         this.containerElement.removeChild(this.flashcardElement);
-        const ch = this.flashcardElement.childNodes;
         this.score(false);
-        this.setCardDeck(false, ch[0].textContent, ch[1].textContent);
+        const card = this.flashcardElement.childNodes;
+        this.setDeck(card);
       }
       document.body.style.backgroundColor = '';
       event.target.parentNode.style.transform = '';
@@ -122,7 +119,7 @@ class Flashcard {
       event.target.parentNode.style.transitionDuration = '.6s';
       if (this.containerElement.childNodes.length === 0) {
         this.hide();
-        this.resultMethod(this.menuMethod);
+        this.resultShow();
       }
     }
   }

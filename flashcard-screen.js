@@ -13,29 +13,34 @@ class FlashcardScreen {
     this.show = this.show.bind(this);
     this.hide = this.hide.bind(this);
 
-    this.resultMethod = null;
-    this.callResult = this.callResult.bind(this);
-    this.right = document.getElementsByClassName('correct')[0];
-    this.left = document.getElementsByClassName('incorrect')[0];
-    this.rightScore = 0;
-    this.leftScore = 0;
-    this.score = this.score.bind(this);
-    this.cardDeck = {};
+    this.deck = null;
     this.wrongDeck = {};
-    this.getCardDeck = this.getCardDeck.bind(this);
-    this.setCardDeck = this.setCardDeck.bind(this);
+    this.resultShow = null;
+    this.right = this.containerElement.querySelector('.correct');
+    this.wrong = this.containerElement.querySelector('.incorrect');
+    this.rightScore = 0;
+    this.wrongScore = 0;
+    this.score = this.score.bind(this);
+    this.getScore = this.getScore.bind(this);
   }
 
-  show(words, menuMethod, resultMethod) {
-    this.wrongDeck = {};
+  show(words, flag) {
     this.containerElement.classList.remove('inactive');
     const flashcardContainer = document.querySelector('#flashcard-container');
-    this.resultMethod = resultMethod;
-    this.cardDeck = words;
-    Object.keys(words).forEach((key) => {
-      // 新增卡片
-      const newCard = new Flashcard(flashcardContainer, key, words[key], menuMethod, this.callResult, this.hide, this.score, this.getCardDeck, this.setCardDeck);
-    });
+    if (flag) {
+      this.deck = words;
+      Object.keys(words).forEach((key) => {
+        // 新增卡片
+        const newCard = new Flashcard(flashcardContainer, key, words[key], this.hide, this.resultShow, this.score);
+        newCard.setDeck = this.setDeck.bind(this);
+      });
+    } else {
+      Object.keys(this.deck).forEach((key) => {
+        // 新增卡片
+        const newCard = new Flashcard(flashcardContainer, key, words[key], this.hide, this.resultShow, this.score);
+        newCard.setDeck = this.setDeck.bind(this);
+      });
+    }
   }
 
   hide() {
@@ -48,30 +53,31 @@ class FlashcardScreen {
       this.rightScore += 1;
       this.right.textContent = `${this.rightScore}`;
     } else {
-      this.leftScore += 1;
-      this.left.textContent = `${this.leftScore}`;
+      this.wrongScore += 1;
+      this.wrong.textContent = `${this.wrongScore}`;
     }
   }
 
-  // 渲染 result 畫面
-  callResult(menuMethod) {
-    this.resultMethod(this.rightScore, this.leftScore, menuMethod, this.show, this.setCardDeck, this.getCardDeck);
-    this.rightScore = 0;
-    this.leftScore = 0;
-    this.right.textContent = ``;
-    this.left.textContent = ``;
+  getScore(flag) {
+    return flag ? this.rightScore : this.wrongScore;
   }
 
-  getCardDeck(flag) {
-    if (flag) return this.cardDeck;
-    return this.wrongDeck;
-  }
-
-  setCardDeck(flag, key, value) {
+  setScore(newScore, flag) {
     if (flag) {
-      this.cardDeck = key;
+      this.rightScore = newScore;
+      this.right.textContent = ``;
     } else {
-      this.wrongDeck[key] = value;
+      this.wrongScore = newScore;
+      this.wrong.textContent = ``;
     }
+  }
+
+  getDeck(flag) {
+    return flag ? this.deck : this.wrongDeck;
+  }
+
+  // todo
+  setDeck(newCard) {
+    this.wrongDeck[newCard[0].textContent] = newCard[1].textContent
   }
 }
