@@ -35,11 +35,12 @@ class FlashcardScreen {
         newCard.setDeck = this.setDeck.bind(this);
       });
     } else {
-      Object.keys(this.deck).forEach((key) => {
+      Object.keys(this.wrongDeck).forEach((key) => {
         // 新增卡片
         const newCard = new Flashcard(flashcardContainer, key, words[key], this.hide, this.resultShow, this.score);
         newCard.setDeck = this.setDeck.bind(this);
       });
+      this.wrongDeck = {};
     }
   }
 
@@ -76,8 +77,7 @@ class FlashcardScreen {
     return flag ? this.deck : this.wrongDeck;
   }
 
-  // todo
   setDeck(newCard) {
-    this.wrongDeck[newCard[0].textContent] = newCard[1].textContent
+    this.wrongDeck[newCard] = this.deck[newCard];
   }
 }

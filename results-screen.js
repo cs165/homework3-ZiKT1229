@@ -47,16 +47,15 @@ class ResultsScreen {
     this.containerElement.classList.add('inactive');
   }
 
-  // todo
   continueEvent() {
     this.hide();
     if (this.getScore(false)) {
-      const deck = this.getDeck(true);
+      const deck = this.getDeck(false);
       this.cardShow(deck, false);
       this.setScore(0, false);
     } else {
       const deck = this.getDeck(true);
-      this.cardShow(deck, false);
+      this.cardShow(deck, true);
       this.setScore(0, true);
       this.setScore(0, false);
     }

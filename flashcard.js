@@ -111,7 +111,7 @@ class Flashcard {
         this.containerElement.removeChild(this.flashcardElement);
         this.score(false);
         const card = this.flashcardElement.childNodes;
-        this.setDeck(card);
+        this.setDeck(card[0].textContent);
       }
       document.body.style.backgroundColor = '';
       event.target.parentNode.style.transform = '';
